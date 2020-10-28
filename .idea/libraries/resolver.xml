@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="resolver">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/JavaUTILS/xmlbeans-bin-3.1.0/xmlbeans-3.1.0/lib/resolver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/JavaUTILS/xmlbeans-bin-3.1.0/xmlbeans-3.1.0/lib/xmlbeans-3.1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/JavaUTILS/xmlbeans-bin-3.1.0/xmlbeans-3.1.0/lib/xmlbeans-3.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/JavaUTILS/xmlbeans-bin-3.1.0/xmlbeans-3.1.0/lib/xmlbeans-3.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../Program Files/JavaUTILS/xmlbeans-bin-3.1.0/xmlbeans-3.1.0/lib/xmlbeans-3.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

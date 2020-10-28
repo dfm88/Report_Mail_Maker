@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<Pane fx:id="panee" prefHeight="619.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+   <children>
+      <Text layoutX="73.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TRASCINA QUI IL MATTINALE IN EXCEL">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <StackPane layoutX="179.0" layoutY="107.0" onDragDropped="#handleDragDropped" onDragExited="#handleDragOverNOT" onDragOver="#handleDragOver">
+         <children>
+            <ImageView fx:id="ImmagineXlsVuoto" fitHeight="142.0" fitWidth="151.0" onDragDropped="#handleDragDropped" onDragEntered="#handleDragOver2">
+               <image>
+                  <Image url="@../Images/Logo_Excel_Empty.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ImmagineXlsPiena" fitHeight="142.0" fitWidth="151.0" onDragDropped="#handleDragDropped" onDragEntered="#handleDragOver2" onDragExited="#handleDragOverNOT" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Images/Logo_Excel_Full.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Button fx:id="avvioButton" disable="true" layoutX="215.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#avviaProcesso" prefHeight="71.0" prefWidth="80.0">
+         <graphic>
+            <ImageView fitHeight="56.0" fitWidth="60.0">
+               <image>
+                  <Image url="@../Images/LogoMakr_0Rgr4v.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <StackPane alignment="TOP_CENTER" layoutX="26.0" layoutY="258.0" prefHeight="61.0" prefWidth="458.0">
+         <children>
+            <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" StackPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="testo" fill="#22431c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </TextFlow>
+         </children>
+      </StackPane>
+      <StackPane alignment="TOP_CENTER" layoutX="26.0" layoutY="418.0" prefHeight="61.0" prefWidth="458.0">
+         <children>
+            <TextFlow prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" StackPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="testoRapporto" fill="#22431c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </TextFlow>
+         </children>
+      </StackPane>
+      <Text layoutX="24.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo Rimasto:">
+         <font>
+            <Font size="13.0" />
+         </font></Text>
+      <Text fx:id="tempoRimasto" layoutX="121.0" layoutY="567.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00.00" wrappingWidth="128.13671875">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <Text layoutX="324.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elementi creati:">
+         <font>
+            <Font size="13.0" />
+         </font></Text>
+      <Text fx:id="elementiCreati" layoutX="426.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="55.13671875">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <ProgressBar fx:id="progressBar" layoutX="26.0" layoutY="502.0" prefHeight="37.0" prefWidth="458.0" progress="0.0" />
+      <Button layoutX="360.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#showInfo" opacity="0.8" prefHeight="29.0" prefWidth="29.0">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/InfoIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Info" />
+         </tooltip>
+      </Button>
+      <Button layoutX="453.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#showSettings" opacity="0.8" prefHeight="29.0" prefWidth="29.0">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/SettingIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Impostazioni" />
+         </tooltip>
+      </Button>
+      <Text layoutX="26.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tempo Effettvo:">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="tempoEffett" layoutX="121.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-- : -- : -- . --" wrappingWidth="128.13671875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="percentualeText" layoutX="200.0" layoutY="526.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" visible="false" wrappingWidth="111.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Button fx:id="statButton" layoutX="406.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#showStatistics" opacity="0.8" prefHeight="29.0" prefWidth="29.0">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/StatPic.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Statistiche" />
+         </tooltip>
+      </Button>
+      <Text fill="#00000045" layoutX="121.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" h : m :  s . ms" />
+   </children>
+</Pane>
