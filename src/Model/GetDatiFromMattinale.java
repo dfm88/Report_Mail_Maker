@@ -38,7 +38,6 @@ public class GetDatiFromMattinale {
 
 
     public void metodoCheSetta() throws IOException {
-        //   System.out.println ("lo prende  ?  " +Controller.getFileInserito());
 
         fl = new FileManager();
         setPercorsoAbsolute(MainController.getCartellaDelFileInserito()); // C:-Users-user-Documents-PROFaxMailProj
@@ -57,8 +56,6 @@ public class GetDatiFromMattinale {
 
         //prendo il numero di righe
         numDiRighe = sh.getLastRowNum();
-        System.out.println("Numero di righe totali: "+numDiRighe+"\n");
-
 
     }
 
@@ -103,10 +100,6 @@ public class GetDatiFromMattinale {
 
 
 
-
-
-
-            //  System.out.println("Ragioni sociali da Array : " +listaRagioniSociali.get(i).toString());
 
         }
 

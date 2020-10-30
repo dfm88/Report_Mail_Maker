@@ -60,13 +60,11 @@ public class StatisticsMailConverted {
 
     public void compilaExcelStatistiche(int numeroRapportiCreati, int numeroRapportiFalliti, Duration durataTotaleReale, int ultimoIDRapporto) throws IOException, InterruptedException {
         int ultiamRiga = sh.getLastRowNum();
-        System.out.println(ultiamRiga);
+
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         Date d = new Date(timestamp.getTime());
-
-        System.out.println(d);
 
         //salva timeStamp
         sh.createRow(ultiamRiga+1).createCell(0).setCellValue(timestamp.toString().substring(0, 10));

@@ -108,7 +108,7 @@ public class MainController implements Initializable {
     @FXML
     void handleDragDropped(DragEvent event) {
         boolean b = false;
-        System.out.println("prima "+b);
+
         Dragboard db = event.getDragboard();
         File file = db.getFiles().get(0);
         b = true;
@@ -122,7 +122,6 @@ public class MainController implements Initializable {
         if (b) {
             fileAccettato();
 
-            System.out.println(b);
             testo.setText(getFileInserito());
 
             ImmagineXlsVuoto.setVisible(false);
@@ -131,13 +130,6 @@ public class MainController implements Initializable {
 
 
         }
-        System.out.println("Il percorso del file caricato "+file.getAbsolutePath());
-        System.out.println("La sua cartella: "+file.getParent());
-
-
-
-
-
 
     }
 
@@ -288,11 +280,10 @@ public class MainController implements Initializable {
                 for (variabileCiclo = 0; variabileCiclo < compRap.getListaNomiFile().size(); variabileCiclo++) {
                     try {
                         rapportiAncoraDaProcessare = compRap.getListaNomiFile().size()-variabileCiclo;
-                        System.out.println("Rapporti Acnora da processare = "+rapportiAncoraDaProcessare);
 
                         inizioConversione = Instant.now();
                         nomeRapportProcessato = compRap.getListaNomiFile().get(variabileCiclo);
-                        System.out.println("CICLO1 - KKKKKKKKKKKKKKKKK " + getInizio());
+
                         updateMessage(compRap.getListaNomiFile().get(variabileCiclo));
                         String esitoConvers = compRap.metodoCheCompilaIRapporti(variabileCiclo);
                         if(esitoConvers==null) //caso in cui la conversione non è riuscita
@@ -302,6 +293,7 @@ public class MainController implements Initializable {
                         }
                         else
                         {
+                            System.out.println("Esito conversione non dvorebbe essere null, infatti esitoCoversione=null dà : "+esitoConvers);
                             rapportiABuonFine++;
 
                             Platform.runLater(new Runnable() {
@@ -310,12 +302,9 @@ public class MainController implements Initializable {
                                 }
                             });
 
-                            System.out.println("CICLO2 - KKKKKKKKKKKKKKKKK " + getInizio());
                         }
                         updateProgress(variabileCiclo+1, compRap.getListaNomiFile().size());
                         fineConversione = Instant.now();
-
-                        System.out.println("****VARAIBILE CICLO ***** "+variabileCiclo);
 
 
                     } catch (Exception e)
@@ -338,8 +327,7 @@ public class MainController implements Initializable {
 
                                 //aggiorna tempo stimato
                                 Duration durataSingolaConversione = calcolaDurataTempo(inizioConversione, fineConversione);
-                                System.out.println("TEMPO SINGOLA CONVERSIONE = "+durataDaStampare(durataSingolaConversione));
-                                System.out.println("TEMPOSTIMATO (SINGOLA CONV MOLTIPLICATA PER "+rapportiAncoraDaProcessare+" = "+durataDaStampare(durataSingolaConversione.multipliedBy(rapportiAncoraDaProcessare)));
+
                                 //  tempoStimato.setText(durataDaStampare(durataSingolaConversione.multipliedBy(rapportiAncoraDaProcessare)));
                                 tempoRimasto.setText(durataDaStampare(compRap.getDurataConversione().multipliedBy(rapportiAncoraDaProcessare)));
 
@@ -358,10 +346,7 @@ public class MainController implements Initializable {
                 return null;
             }
         };
-        System.out.println("Contatore GetInizio : " + getInizio());
 
-
-        System.out.println("7 - KKKKKKKKKKKKKKKKK " + getInizio());
 
         task1.messageProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -395,11 +380,13 @@ public class MainController implements Initializable {
                 Duration durata = calcolaDurataTempo(startTime, finishTime);
 
                 tempoEffett.setText(durataDaStampare(durata));
-                tempoRimasto.setText("00:00:00:00");
+                tempoRimasto.setText("00:00:00.00");
 
 
                 try {
                     //compila Foglio statistiche
+                    System.out.println("Rapporti a Buon fine "+rapportiABuonFine);
+
                     StatisticsMailConverted savStat = new StatisticsMailConverted();
                     savStat.recuperaFoglioStatistiche();
                     int rapportiFalliti = compRap.getListaNomiFile().size()-rapportiABuonFine;
@@ -408,10 +395,6 @@ public class MainController implements Initializable {
                     e.printStackTrace();
                 }
 
-
-
-
-                System.out.println("Ho finittttttooooooooooooo");
 
                 if ( rapportiABuonFine == compRap.getListaNomiFile().size())
                 {
@@ -436,13 +419,6 @@ public class MainController implements Initializable {
             }
         });
 
-
-
-
-
-
-        System.out.println("8 - KKKKKKKKKKKKKKKKK " + getInizio());
-
         progressBar.progressProperty().unbind();
         progressBar.progressProperty().bind(task1.progressProperty());
 
@@ -451,92 +427,6 @@ public class MainController implements Initializable {
         th.start();
 
 
-
-        /*
-
-
-         */
-/*************TASK 2 - aggiorna la percentuale nella Task Bar***********************************//*
-
-        Task<Void> task2 = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-
-
-                for (int i=0; i<compRap.getListaNomiFile().size(); i++) {
-                    setInizio(i);
-
-                    float ciclo = (float)i+1;
-                    float dim = (float)compRap.getListaNomiFile().size();
-
-                    DecimalFormat df = new DecimalFormat("#.##");
-
-
-                    updateMessage(String.valueOf(df.format((ciclo/dim)*100)));
-
-                    Thread.sleep(3300);
-
-
-
-                }
-                return null;
-            }
-        };
-
-
-        task2.messageProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldSt, String newSt2) {
-
-                percentualeText.setText(newSt2+"%");
-
-            }
-        });
-
-        Thread th2 = new Thread(task2);
-        th2.setDaemon(true);
-        th2.start();
-*/
-        /*
-
-         */
-/*************TASK 3 - aggiorna il numero di rapporti creati***********************************//*
-
-        Task<Void> task3 = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-
-
-                for (int i=0; i<compRap.getListaNomiFile().size(); i++) {
-
-
-                    updateMessage(String.valueOf(i+1));
-
-                    Thread.sleep(3300);
-
-
-
-                }
-                return null;
-            }
-        };
-
-
-        task3.messageProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldSt, String newSt2) {
-
-                elementiCreati.setVisible(true);
-                elementiCreati.setText(newSt2+"/"+compRap.getListaNomiFile().size());
-
-            }
-        });
-
-        Thread th3 = new Thread(task3);
-        th3.setDaemon(true);
-        th3.start();
-
-*/
     }
 
 

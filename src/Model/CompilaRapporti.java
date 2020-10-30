@@ -51,10 +51,10 @@ public class CompilaRapporti
         fll = new FileManager();
 
         File f = new File("");
-        System.out.println("Absolute path "+f.getAbsolutePath());
+
         setPercorsoMaster(f.getAbsolutePath()+"\\PROFaxMailProj\\src\\FileMasterRapportiExcel\\MASTERRapportiVigilanza.xlsx");
 
-        System.out.println(getPercorsoMaster());
+
         //apertura del file RAPPORTIVIGILANZA
         fis = fll.getFileInputStream(getPercorsoMaster());
         wb = fll.getExcelWorkBook(fis);
@@ -106,14 +106,9 @@ public class CompilaRapporti
 
             listaNomiFile.add(nomePagineOrario + estensioneExcel);
 
-            //   System.out.println("aa " + masterFile.toPath());
-
 
 /*           *****vecchio*****
 
-
-            //  System.out.println("bb "+nuovoFile.toPath());
-            // System.out.println("bb "+nuovoFile.toPath());
 
             // if(!nuovoFile.exists())
 
@@ -129,7 +124,6 @@ public class CompilaRapporti
 
         }
 
-        System.out.println("MetodoCheGeneraINomideiFile ha finito");
 
     }
 
@@ -173,18 +167,11 @@ public class CompilaRapporti
             setIDRapporto(ottieniUltimoRapportoID());
         }
 
-        System.out.println("AAAAAAAAA nuovo metodo veidamo che ID legge : "+getIDRapporto());
-
-
         Cell cellIDRapporto = sh.getRow(11).getCell(5);
         setIDRapporto(getIDRapporto() + 1);
         cellIDRapporto.setCellValue(getIDRapporto());
 
-        System.out.println("BBBBBBB leggo direttamente dalla cella : "+cellIDRapporto.getNumericCellValue());
 
-
-
-        System.out.println("Entra nel ciclo ? "+listaNomiFile.size()+" = "+(i+1) + " "+(listaNomiFile.size()==i+1));
         //salvo l'ID del rapporto sul FILe solo all'ultimo ciclo, per evitare di scriverlo ad ogni iterazione
         if(listaNomiFile.size()==i+1)
         {
@@ -240,16 +227,13 @@ public class CompilaRapporti
 
         if(!conversioneRiuscita)
         {
-            System.out.println("qui gestire errore conversione nel CompilaRapporti");
             stringaDaTornare = null;
         } else
         {
-            System.out.println( "conversione riuscita nel controller");
-            stringaDaTornare = listaNomiFile.get(i);
+           stringaDaTornare = listaNomiFile.get(i);
 
 
         }
-        System.out.println("YYYYYYYYYYY leggo direttamente dalla cella : "+cellIDRapporto.getNumericCellValue());
 
         return  stringaDaTornare;
     }
@@ -258,7 +242,6 @@ public class CompilaRapporti
         XlsToPDF xls2PDF = new XlsToPDF();
 
         String nomeFileSenzaXLS = nomeFiledaConvertire.replaceAll(".xlsx", "");
-        System.out.println("scrittura script");
         // xls2PDF.writeNewScript(percorsoRapportExcelCreato, getPercorsoMaster()+"\\Pdf_WHATAFUCK\\"+listaNomiFile.get(i));
         //JAVAFX
 
@@ -286,7 +269,6 @@ public class CompilaRapporti
         //se non esiste nelle risorse esterne, lo copio io prendendolo dalla cartella Res del JAR (anche se non sarà aggiornato
         if (!masterIDRap.exists())
         {
-            System.out.println("per recuperare l'ID del rapporto sto copiando il file config.properties dal JAT - att.ne potrebbe non essere aggiornato");
             InputStream is = fm.getFileFromResourceAsStream("Config\\config.properties"); //percorso nel JAR
             Files.copy(is, Path.of(percorsoProperties));
             is.close();
@@ -314,7 +296,6 @@ public class CompilaRapporti
         //se non esiste nelle risorse esterne, lo copio io prendendolo dalla cartella Res del JAR (anche se non sarà aggiornato
         if (!masterIDRap.exists())
         {
-            System.out.println("per recuperare l'ID del rapporto sto copiando il file config.properties dal JAT - att.ne potrebbe non essere aggiornato");
             InputStream is = fm.getFileFromResourceAsStream("Config\\config.properties"); //percorso nel JAR
             Files.copy(is, Path.of(percorsoProperties));
             is.close();

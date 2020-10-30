@@ -26,7 +26,9 @@ public class XlsToPDF {
 
         String percorsoMacro = fm.getPercorsoRisorse()+"Script\\macro.vbs"; //percorso nel PC
         File macro = new File("");
-        setPercorsoMacro(percorsoMacro); // C:-Users-user-Documents-PROFaxMailProj++\ExcelToPFDConverter\macro.vbs
+
+        //necessarie virgolette quando leggo il percorso dal file CONFIG, altrimenti lo script dà errore negli spazi bianchi del percorso file
+        setPercorsoMacro("\""+percorsoMacro+"\"");
 
 
         macro = new File(percorsoMacro);
@@ -42,6 +44,7 @@ public class XlsToPDF {
         BufferedWriter bw = new BufferedWriter(fw);
 
         Boolean esitoConversione = true;
+
 
         bw.write(compilaScript(percorsoOrigineExcel, percorsoDestinazionePDF));
         bw.close();
@@ -63,7 +66,6 @@ public class XlsToPDF {
 
         }   catch(IOException | InterruptedException e )
         {
-            System.out.println(e);
             esitoConversione = false;
 
         }
@@ -77,6 +79,10 @@ public class XlsToPDF {
 
     public String compilaScript(String fielXLS, String filePdf)
     {
+
+        System.out.println("\"");
+
+
         return 	"Dim Excel\r\n" +
                 "Dim ExcelDoc\r\n" +
                 "\r\n" +

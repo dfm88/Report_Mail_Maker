@@ -42,9 +42,9 @@ public class FileManager {
         try {
             File f = new File(percorso+"\\"+nomeFile+formato);
             if (f.createNewFile()) {
-                System.out.println("File created: " + f.getName());
+
             } else {
-                System.out.println("File already exists.");
+
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -64,9 +64,9 @@ public class FileManager {
             FileWriter myWriter = new FileWriter(percorso);
             myWriter.write(testoDaScrivere);
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+
             e.printStackTrace();
         }
     }
@@ -88,7 +88,7 @@ public class FileManager {
             return testoLetto;
 
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+
             e.printStackTrace();
             return null;
         }
