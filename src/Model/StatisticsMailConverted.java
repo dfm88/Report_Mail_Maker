@@ -12,7 +12,9 @@ import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class StatisticsMailConverted {
 
@@ -244,10 +246,64 @@ public class StatisticsMailConverted {
         StatisticsMailConverted ss = new StatisticsMailConverted();
       /*  ss.recuperaFoglioStatistiche();
         ss.compilaExcelStatistiche(5);*/
-        System.out.println(ss.lastConversionNumber());
+        ss.setPercorsoDelFileStatistiche("C:\\Users\\user\\Documents\\PerAnagrafica DB.xlsx");
+
+        File fileStatistiche = new File(ss.getPercorsoDelFileStatistiche());
+
+
+
+        //apro il file Statistiche dal computer
+        fis = fm.getFileInputStream(ss.getPercorsoDelFileStatistiche());
+        wb = fm.getExcelWorkBook(fis);
+        sh = fm.getExcelSheet(wb);
+
+       /* System.out.println(ss.lastConversionNumber());
         System.out.println(ss.totalConversionsNumber());;
         System.out.println(ss.lastConversionSavedTime());
-        System.out.println("Risparmiato totale  "+ss.totalConversionsSavedTime());
+        System.out.println("Risparmiato totale  "+ss.totalConversionsSavedTime());*/
+
+//ID VIGILANZA
+        ArrayList<Integer> IdVigilanze = new ArrayList<Integer>();
+        IdVigilanze.add(5);
+        IdVigilanze.add(8);
+        IdVigilanze.add(9);
+        IdVigilanze.add(10);
+        IdVigilanze.add(11);
+        IdVigilanze.add(12);
+        IdVigilanze.add(13);
+        IdVigilanze.add(14);
+
+
+        for(int i=1; i<sh.getLastRowNum();i++)
+        {
+//EMAIL
+            String nomAnagrafica = sh.getRow(i).getCell(1).getStringCellValue();
+            String mod = nomAnagrafica.replaceAll(" ","");
+            String email = mod+"@gmail.com";
+            sh.getRow(i).getCell(6).setCellValue(email);
+            System.out.println(nomAnagrafica);
+            System.out.println(email);
+
+//NUM TELEFONO
+            Random rand = new Random();
+            String prim = String.valueOf(rand.nextInt(99));
+            String sec = String.valueOf(rand.nextInt(99));
+            String terz = String.valueOf(rand.nextInt(999));
+            String numTelefono = "+39 "+ prim+" "+sec+" "+terz;
+            sh.getRow(i).getCell(5).setCellValue(numTelefono);
+
+//setto id vigilanza
+            int idVigRandom = IdVigilanze.get(rand.nextInt(7)+0);
+            sh.getRow(i).getCell(7).setCellValue(idVigRandom);
+
+
+            fos = new FileOutputStream(ss.getPercorsoDelFileStatistiche());
+            wb.write(fos);
+            fos.flush();
+            fos.close();
+            fis.close();
+
+        }
 
 
     }

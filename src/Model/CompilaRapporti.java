@@ -239,7 +239,6 @@ public class CompilaRapporti
     }
 
     public boolean metodoCheConverte(String nomeFiledaConvertire, String percorsoRapportExcelCreato) throws IOException {
-        XlsToPDF xls2PDF = new XlsToPDF();
 
         String nomeFileSenzaXLS = nomeFiledaConvertire.replaceAll(".xlsx", "");
         // xls2PDF.writeNewScript(percorsoRapportExcelCreato, getPercorsoMaster()+"\\Pdf_WHATAFUCK\\"+listaNomiFile.get(i));
@@ -247,7 +246,7 @@ public class CompilaRapporti
 
         inizioConversione = Instant.now();
 
-        conversioneRiuscita = (xls2PDF.writeNewScript(percorsoRapportExcelCreato, MainController.getCartellaDeiRapportiCreatiPDF() + "\\" + nomeFileSenzaXLS + estensionePDF));
+        conversioneRiuscita = (XlsToPDF.writeNewScript(percorsoRapportExcelCreato, MainController.getCartellaDeiRapportiCreatiPDF() + "\\" + nomeFileSenzaXLS + estensionePDF));
 
         fineConversione = Instant.now();
 

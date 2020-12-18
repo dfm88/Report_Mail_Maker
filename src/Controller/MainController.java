@@ -282,6 +282,7 @@ public class MainController implements Initializable {
                         rapportiAncoraDaProcessare = compRap.getListaNomiFile().size()-variabileCiclo;
 
                         inizioConversione = Instant.now();
+                        System.out.println(inizioConversione);
                         nomeRapportProcessato = compRap.getListaNomiFile().get(variabileCiclo);
 
                         updateMessage(compRap.getListaNomiFile().get(variabileCiclo));

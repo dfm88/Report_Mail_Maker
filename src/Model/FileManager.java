@@ -10,13 +10,13 @@ import java.util.Properties;
 
 public class FileManager {
 
-    private FileInputStream fis;
-    private Workbook wb;
-    private Sheet sh;
-    private FileOutputStream fos;
+    private static FileInputStream fis;
+    private static Workbook wb;
+    private static Sheet sh;
+    private static FileOutputStream fos;
     private final String percorsoRisorseLavoro = "X:\\Sezione Radio\\Operating.Sez.Radio\\Margoni\\Margoni Personale\\Master\\FaxMailProjMASTER\\";
     private final String percorsoRisorseCasa = "C:\\Users\\user\\Documents\\Risorse_Software\\FaxMailProjectATHome\\";
-    private String percorsoRisorse;
+    private static String percorsoRisorse;
 
 
 
@@ -25,7 +25,7 @@ public class FileManager {
         //nb il master path lo leggo sempre dal jar, mai esternamnete, quindi se lo devo modificare entro nel JAR
 
         Properties propInternalInRes = getPropertiesFile("Config/config.properties");
-        setPercorsoRisorse(propInternalInRes.getProperty("MasterPath"));
+        percorsoRisorse = (propInternalInRes.getProperty("MasterPath"));
 
 
 
@@ -37,7 +37,7 @@ public class FileManager {
      * @param nomeFile preceduto nel metodo da \\
      * @param formato da indicare con il . davanti
      */
-    public void createFile(String percorso, String nomeFile, String formato)
+    public static void createFile(String percorso, String nomeFile, String formato)
     {
         try {
             File f = new File(percorso+"\\"+nomeFile+formato);
@@ -58,7 +58,7 @@ public class FileManager {
      * @param percorso
      * @param testoDaScrivere
      */
-    public void writeToFile(String percorso, String testoDaScrivere)
+    public static void writeToFile(String percorso, String testoDaScrivere)
     {
         try {
             FileWriter myWriter = new FileWriter(percorso);
@@ -76,7 +76,7 @@ public class FileManager {
      * @param percorso
      * @return ritorna la string letta nel ciclo While
      */
-    public String readFile(String percorso) throws IOException {
+    public static String readFile(String percorso) throws IOException {
         try {
             FileReader fr = new FileReader(percorso);
             BufferedReader br = new BufferedReader(fr);
@@ -100,10 +100,10 @@ public class FileManager {
      * @param fileName
      * @return ritorna L'Inputstream del file letto
      */
-    public InputStream getFileFromResourceAsStream(String fileName) {
+    public static InputStream getFileFromResourceAsStream(String fileName) {
 
         // The class loader that loaded the class
-        ClassLoader classLoader = getClass().getClassLoader();
+        ClassLoader classLoader = FileManager.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
 
         // the stream holding the file content
@@ -115,7 +115,7 @@ public class FileManager {
 
     }
 
-    public Properties getPropertiesFile(String path) throws IOException {
+    public static Properties getPropertiesFile(String path) throws IOException {
         Properties p = new Properties();
         InputStream is = getFileFromResourceAsStream(path);
         p.load(is);
@@ -124,7 +124,7 @@ public class FileManager {
 
     }
 
-    public Properties getPropertiesFileFromDISK(String path) throws IOException {
+    public static Properties getPropertiesFileFromDISK(String path) throws IOException {
         Properties p = new Properties();
         InputStream is = getFileInputStream(path);
         p.load(is);
@@ -133,7 +133,7 @@ public class FileManager {
 
     }
 
-    public void setPropertiesFile(String key, String value, Properties p) throws IOException {
+    public static void setPropertiesFile(String key, String value, Properties p) throws IOException {
         // Properties p = new Properties();
         OutputStream os = new FileOutputStream("Config\\config.properties");
         p.setProperty(key, value);
@@ -141,7 +141,7 @@ public class FileManager {
 
     }
 
-    public void setPropertiesFileOnDISK(String key, String value, Properties p) throws IOException {
+    public static void setPropertiesFileOnDISK(String key, String value, Properties p) throws IOException {
         // Properties p = new Properties();
         OutputStream os = new FileOutputStream(percorsoRisorse+"Config\\config.properties");
         p.setProperty(key, value);
@@ -149,34 +149,34 @@ public class FileManager {
 
     }
 
-    public Workbook getExcelWorkBook(InputStream is) throws IOException {
+    public static Workbook getExcelWorkBook(InputStream is) throws IOException {
 
         return WorkbookFactory.create(is);
 
     }
 
-    public void writeExcel(String Percorso, Workbook workbook) throws IOException {
+    public static void writeExcel(String Percorso, Workbook workbook) throws IOException {
 
         FileOutputStream fos = new FileOutputStream(Percorso);
         workbook.write(fos);
         fos.flush();
     }
 
-    public void chiudiFileInputStream(FileInputStream fis) throws IOException {
+    public static void chiudiFileInputStream(FileInputStream fis) throws IOException {
         fis.close();
     }
 
-    public void chiudiFileOutputStream(FileOutputStream fos) throws IOException {
+    public static void chiudiFileOutputStream(FileOutputStream fos) throws IOException {
         fos.close();
     }
 
-    public void chiudiWorkbookExcel(Workbook wb) throws IOException {
+    public static void chiudiWorkbookExcel(Workbook wb) throws IOException {
         wb.getCreationHelper().createFormulaEvaluator().evaluateAll(); //evita che chieda il salvataggio del WorkBook Excel
         wb.close();
     }
 
 
-    public void eliminaFile(String percorso, File file)
+    public static void eliminaFile(String percorso, File file)
     {
         if(file.exists())
         {
@@ -185,7 +185,7 @@ public class FileManager {
     }
 
 
-    public FileInputStream getFileInputStream(String percorso) throws IOException {
+    public static FileInputStream getFileInputStream(String percorso) throws IOException {
 
         return new FileInputStream(percorso);
 
@@ -193,13 +193,13 @@ public class FileManager {
 
 
 
-    public Workbook getExcelWorkBook(FileInputStream Fis) throws IOException {
+    public static Workbook getExcelWorkBook(FileInputStream Fis) throws IOException {
 
         return WorkbookFactory.create(Fis);
 
     }
 
-    public Sheet getExcelSheet(Workbook Wb) throws IOException {
+    public static Sheet getExcelSheet(Workbook Wb) throws IOException {
 
         String nomePagina = Wb.getSheetName(0); //prende il nome della pagina excel
 
@@ -207,13 +207,11 @@ public class FileManager {
 
     }
 
-    public String getPercorsoRisorse() {
+    public static String getPercorsoRisorse() {
         return percorsoRisorse;
     }
 
-    public void setPercorsoRisorse(String percorsoRisorse) {
-        this.percorsoRisorse = percorsoRisorse;
-    }
+
 
 
     public static void main(String[] args) throws IOException {

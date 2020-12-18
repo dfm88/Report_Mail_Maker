@@ -10,7 +10,7 @@ public class XlsToPDF {
     private String percorsoOrigineExcel;
     private String percorsoDestinazionePDF;
 
-    private FileManager fm;
+    private static FileManager fm;
 
 
     /**
@@ -20,15 +20,16 @@ public class XlsToPDF {
      * @return
      * @throws IOException
      */
-    public boolean writeNewScript(String percorsoOrigineExcel, String percorsoDestinazionePDF) throws IOException
+    public static boolean writeNewScript(String percorsoOrigineExcel, String percorsoDestinazionePDF) throws IOException
     {
         fm = new FileManager();
 
         String percorsoMacro = fm.getPercorsoRisorse()+"Script\\macro.vbs"; //percorso nel PC
         File macro = new File("");
+        System.out.println(percorsoMacro);
 
-        //necessarie virgolette quando leggo il percorso dal file CONFIG, altrimenti lo script dà errore negli spazi bianchi del percorso file
-        setPercorsoMacro("\""+percorsoMacro+"\"");
+
+
 
 
         macro = new File(percorsoMacro);
@@ -36,8 +37,9 @@ public class XlsToPDF {
         {
             macro.createNewFile();
         }
-
-
+        //necessarie virgolette quando leggo il percorso dal file CONFIG, altrimenti lo script dà errore negli spazi bianchi del percorso file
+        percorsoMacro = ("\""+percorsoMacro+"\"");
+        System.out.println(percorsoMacro);
 
         FileWriter fw = new FileWriter(macro, false);
 
@@ -51,7 +53,7 @@ public class XlsToPDF {
 
         try
         {
-            Process p = Runtime.getRuntime().exec( "wscript "+getPercorsoMacro() );
+            Process p = Runtime.getRuntime().exec( "wscript "+percorsoMacro );
             System.out.println("Waiting for batch file ...");
             p.waitFor();
             if(p.exitValue()==0) //errore nella conversione
@@ -77,7 +79,7 @@ public class XlsToPDF {
 
 
 
-    public String compilaScript(String fielXLS, String filePdf)
+    public static String compilaScript(String fielXLS, String filePdf)
     {
 
         System.out.println("\"");
@@ -98,13 +100,7 @@ public class XlsToPDF {
 
 
 
-    public String getPercorsoMacro() {
-        return percorsoMacro;
-    }
 
-    public void setPercorsoMacro(String percorsoMacro) {
-        this.percorsoMacro = percorsoMacro;
-    }
 
     public String getPercorsoOrigineExcel() {
         return percorsoOrigineExcel;
@@ -122,8 +118,10 @@ public class XlsToPDF {
         this.percorsoDestinazionePDF = percorsoDestinazionePDF;
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
+        Boolean b = null;
+         b = XlsToPDF.writeNewScript("C:\\Users\\user\\Documents\\PerAnagrafica DB.xlsx",
+                  "C:\\Users\\user\\Documents\\PerAnagrafica DB.pdf");
 
 
     }
